@@ -1,4 +1,4 @@
-## OTDJ API Server Prototype (NestJS)
+## XPF API Server Prototype (NestJS)
 API 서버 프로토타입
 
 ### 스택
