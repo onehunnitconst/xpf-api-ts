@@ -6,7 +6,7 @@ import {
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '@App/modules/prisma/prisma.service';
+import { PrismaService } from '../modules/prisma/prisma.service';
 import * as argon2 from 'argon2';
 
 @Injectable()

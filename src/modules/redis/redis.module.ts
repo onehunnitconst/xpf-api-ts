@@ -1,6 +1,6 @@
 import { DynamicModule, Logger, Module } from '@nestjs/common';
 import { createClient } from 'redis';
-import Constants from '@App/constants';
+import Constants from '../../constants';
 import { RedisService } from './redis.service';
 
 @Module({})
