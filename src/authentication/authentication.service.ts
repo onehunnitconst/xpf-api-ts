@@ -8,14 +8,12 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@App/modules/prisma/prisma.service';
 import * as argon2 from 'argon2';
-import { RedisService } from '@App/modules/redis/redis.service';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-    private redis: RedisService,
   ) {}
 
   async login(body: LoginDto) {
@@ -38,8 +36,6 @@ export class AuthenticationService {
     const token = await this.jwtService.signAsync({
       user_id: user.id,
     });
-
-    await this.redis.client.set(`token:${user.id}`, token, { EX: 15 });
 
     return { token };
   }
