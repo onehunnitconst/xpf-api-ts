@@ -13,4 +13,10 @@ export class UsersController {
   async getMyProfile(@UserData() { user_id }: JwtPayloadDto) {
     return this.service.getProfile(+user_id);
   }
+
+  @Get('my/items')
+  @UseGuards(AuthGuard)
+  async getMyItems(@UserData() { user_id }: JwtPayloadDto) {
+    return this.service.getItems(+user_id);
+  }
 }

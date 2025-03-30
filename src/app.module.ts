@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { AppController } from './app.controller';
+import { ProfilesModule } from './profiles/profiles.module';
 
 @Module({
   controllers: [AppController],
@@ -19,6 +20,7 @@ import { AppController } from './app.controller';
       signOptions: { expiresIn: '15m', algorithm: 'HS256' },
     }),
     RedisModule.register(),
+    ProfilesModule,
   ],
 })
 export class AppModule {}

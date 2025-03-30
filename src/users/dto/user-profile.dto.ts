@@ -1,17 +1,19 @@
-import { User } from '@prisma/client';
+import { Profile } from '@prisma/client';
 
 export class UserProfileDto {
   id: number;
-  user_id: string;
+  x_account_id: string;
   nickname: string;
   profile_image?: string;
+  bio: string;
 
-  static fromModel(model: User): UserProfileDto {
+  static fromModel(model: Profile): UserProfileDto {
     return {
-      id: model.id,
-      user_id: model.user_id,
+      id: model.user_id,
+      x_account_id: model.x_account_id,
       nickname: model.nickname,
       profile_image: model.profile_image,
+      bio: model.bio,
     };
   }
 }

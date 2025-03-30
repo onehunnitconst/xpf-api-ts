@@ -57,14 +57,24 @@ export class AuthenticationService {
 
     const hashedPassword = await argon2.hash(body.password);
 
-    await this.prisma.$transaction([
-      this.prisma.user.create({
+    await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({
         data: {
           user_id: body.user_id,
           password: hashedPassword,
-          nickname: body.nickname,
         },
-      }),
-    ]);
+      });
+
+      await tx.profile.create({
+        data: {
+          user_id: user.id,
+          nickname: body.nickname,
+          x_account_id: body.x_account_id,
+          bio: '',
+        },
+      });
+
+      return user;
+    });
   }
 }
