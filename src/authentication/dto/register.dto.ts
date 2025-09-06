@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
   @ApiProperty()
-  user_id: string;
+  userId: string;
 
   @ApiProperty()
   nickname: string;
@@ -11,5 +11,8 @@ export class RegisterDto {
   password: string;
 
   @ApiProperty()
-  x_account_id: string;
+  passwordConfirm: string;
+
+  @ApiProperty()
+  xAccountId: string;
 }

@@ -1,5 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ProfilesService } from './profiles.service';
+import { AuthGuard } from '@App/guards/auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { UserData } from '@App/decorators/user-data.decorator';
+import { JwtPayloadDto } from '@App/authentication/dto/jwt-payload.dto';
 
 @Controller({
   version: '1',
@@ -8,13 +12,15 @@ import { ProfilesService } from './profiles.service';
 export class ProfilesController {
   constructor(private readonly service: ProfilesService) {}
 
-  @Get(':id')
-  async getProfile(@Param('id') id: string) {
-    return this.service.getProfile(+id);
+  @Get('me')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  async getMyDefaultProfile(@UserData() { userId }: JwtPayloadDto) {
+    return this.service.getMyDefaultProfile(+userId);
   }
 
-  @Get(':id/items')
-  async getItems(@Param('id') id: string) {
-    return this.service.getItems(+id);
+  @Get(':xAccountId')
+  async getProfile(@Param('xAccountId') xAccountId: string) {
+    return this.service.getProfileByXAccountId(xAccountId);
   }
 }

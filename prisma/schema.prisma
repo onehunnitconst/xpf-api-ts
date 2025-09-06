@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "views"]
+  previewFeatures = ["fullTextSearchPostgres", "postgresqlExtensions", "views"]
 }
 
 datasource db {
@@ -9,39 +9,47 @@ datasource db {
   extensions = [pgcrypto]
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  user_id  String @db.VarChar()
-  password String @db.VarChar()
+enum UserStatus {
+  active
+  inactive
 
-  profile Profile?
-  items   Item[]
+  @@map("xpf_user_status")
+}
+
+model User {
+  id       Int        @id @default(autoincrement()) @map("id")
+  password String     @map("password") @db.VarChar
+  status   UserStatus @map("status") @default(inactive)
+  userId   String     @map("user_id") @db.VarChar
+
+  profiles Profile[]
 
   @@map("xpf_users")
 }
 
 model Profile {
-  user_id           Int     @id
-  nickname          String  @db.VarChar()
-  profile_image     String? @db.VarChar()
-  x_account_id      String? @db.VarChar()
-  profile_image_url String? @db.VarChar()
-  bio               String  @db.VarChar()
+  id             Int     @id @default(autoincrement()) @map("id")
+  userId         Int     @map("user_id")
+  nickname       String  @map("nickname") @db.VarChar
+  profileImage   String? @map("profile_image") @db.VarChar
+  xAccountId     String  @map("x_account_id") @db.VarChar
+  bio            String  @map("bio") @db.VarChar
+  defaultProfile Boolean @map("default_profile") @default(false)
 
-  user User @relation(fields: [user_id], references: [id])
+  items Item[]
+  user  User   @relation(fields: [userId], references: [id])
 
   @@map("xpf_profiles")
 }
 
 model Item {
-  id             Int     @id @default(autoincrement())
-  user_id        Int
-  item_image_url String? @db.VarChar()
-  category       String  @db.VarChar()
-  title          String  @db.VarChar()
-  memo           String  @db.VarChar()
+  id           Int     @id @default(autoincrement()) @map("id")
+  profileId    Int     @map("profile_id")
+  itemImageUrl String? @map("item_image_url") @db.VarChar
+  title        String  @map("title") @db.VarChar
+  memo         String  @map("memo") @db.VarChar
 
-  user User @relation(fields: [user_id], references: [id])
+  profile Profile @relation(fields: [profileId], references: [id])
 
   @@map("xpf_items")
 }
