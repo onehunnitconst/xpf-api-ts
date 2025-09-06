@@ -22,7 +22,8 @@ RUN adduser --system --uid 1001 nestjs
 COPY ecosystem.config.js ./
 COPY --from=deps --chown=nestjs:nodejs /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=nestjs:nodejs /usr/src/app/dist ./dist
-COPY --from=builder --chown=nestjs:nodejs /usr/src/app/.env ./.env
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/keys ./keys
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/.env.production ./.env
 RUN yarn global add pm2
 RUN pm2 install pm2-logrotate
 RUN pm2 set pm2-logrotate:dateFormat YYYY-MM-DD

@@ -100,6 +100,7 @@ export class AuthenticationService {
           nickname: body.nickname,
           xAccountId: body.xAccountId,
           bio: '',
+          defaultProfile: true,
         },
       });
 
