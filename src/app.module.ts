@@ -8,16 +8,25 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './modules/interceptors/logger.interceptor';
 import { HttpExceptionFilter } from './modules/filters/http-exception.filter';
+import * as fs from 'fs';
 
 @Module({
   controllers: [AppController],
   imports: [
     AuthenticationModule,
     PrismaModule,
-    JwtModule.register({
+    JwtModule.registerAsync({
       global: true,
-      secret: Constants.jwtSecret,
-      signOptions: { expiresIn: '15m', algorithm: 'HS256' },
+      useFactory: () => {
+        const privateKey = fs.readFileSync(Constants.jwtPrivateKeyPath);
+        const publicKey = fs.readFileSync(Constants.jwtPublicKeyPath);
+
+        return {
+          privateKey,
+          publicKey,
+          signOptions: { expiresIn: '1d', algorithm: 'RS256' },
+        };
+      },
     }),
     ProfilesModule,
   ],

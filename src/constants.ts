@@ -3,13 +3,18 @@ import * as path from 'path';
 
 dotenv.config({ path: path.resolve('.env') });
 
-const { DATABASE_URL, JWT_SECRET, JWT_ALGORITHM, REDIS_HOST, REDIS_PORT } =
-  process.env;
+const { DATABASE_URL } = process.env;
 
 export default abstract class Constants {
   static databaseUrl = DATABASE_URL;
-  static jwtSecret = JWT_SECRET;
-  static jwtAlgorithm = JWT_ALGORITHM;
-  static redisHost = REDIS_HOST;
-  static redisPort = REDIS_PORT;
+  static jwtPrivateKeyPath = path.join(
+    __dirname,
+    '..',
+    'keys/jwt_private_key.key',
+  );
+  static jwtPublicKeyPath = path.join(
+    __dirname,
+    '..',
+    'keys/jwt_public_key.pem',
+  );
 }
