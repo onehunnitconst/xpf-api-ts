@@ -68,7 +68,7 @@ export class ImagesController {
         image: {
           type: 'string',
           format: 'binary',
-          maxLength: 1024 * 1024 * 3,
+          maxLength: 1024 * 1024 * 0,
         },
       },
     },
