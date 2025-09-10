@@ -32,6 +32,7 @@ model Profile {
   userId         Int     @map("user_id")
   nickname       String  @map("nickname") @db.VarChar
   profileImage   String? @map("profile_image") @db.VarChar
+  headerImage    String? @map("header_image") @db.VarChar
   xAccountId     String  @map("x_account_id") @db.VarChar
   bio            String  @map("bio") @db.VarChar
   defaultProfile Boolean @map("default_profile") @default(false)
@@ -47,6 +48,7 @@ model Item {
   profileId    Int     @map("profile_id")
   itemImageUrl String? @map("item_image_url") @db.VarChar
   title        String  @map("title") @db.VarChar
+  summary      String  @map("summary") @db.VarChar
   memo         String  @map("memo") @db.VarChar
 
   profile Profile @relation(fields: [profileId], references: [id])

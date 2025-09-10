@@ -1,32 +1,10 @@
 import { Item, Profile } from '@prisma/client';
-
-export class ProfileItemDto {
-  id: number;
-  itemImageUrl: string;
-  title: string;
-  memo: string;
-
-  constructor(id: number, itemImageUrl: string, title: string, memo: string) {
-    this.id = id;
-    this.itemImageUrl = itemImageUrl;
-    this.title = title;
-    this.memo = memo;
-  }
-
-  static fromModel(model: Item): ProfileItemDto {
-    return {
-      id: model.id,
-      itemImageUrl: model.itemImageUrl,
-      title: model.title,
-      memo: model.memo,
-    };
-  }
-}
-
+import { ProfileItemDto } from './profile-item.dto';
 export class ProfileDto {
   id: number;
   nickname: string;
   profileImage: string;
+  headerImage: string;
   xAccountId: string;
   bio: string;
   items: ProfileItemDto[];
@@ -36,6 +14,7 @@ export class ProfileDto {
       id: model.id,
       nickname: model.nickname,
       profileImage: model.profileImage,
+      headerImage: model.headerImage,
       xAccountId: model.xAccountId,
       bio: model.bio,
       items: model.items.map(ProfileItemDto.fromModel),

@@ -9,6 +9,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './modules/interceptors/logger.interceptor';
 import { HttpExceptionFilter } from './modules/filters/http-exception.filter';
 import * as fs from 'fs';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   controllers: [AppController],
@@ -29,6 +30,7 @@ import * as fs from 'fs';
       },
     }),
     ProfilesModule,
+    ImagesModule,
   ],
   providers: [
     {
